@@ -45,4 +45,16 @@ public class TaskService {
         }
         return taskRepository.save(newTask);
     }
+
+    public Task updateTask(int id, Task updatedTask) {
+        User existingUser = userService.findUserById(updatedTask.getAssignedTo());
+        if (existingUser == null) {
+            return null;
+        }
+
+        return taskRepository.save(id, updatedTask);
+    }
+    public Task deleteTask(int id) {
+        return taskRepository.deleteById(id);
+    }
 }

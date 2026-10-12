@@ -35,4 +35,24 @@ public class TaskController {
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateTask(@PathVariable int id, @RequestBody Task task) {
+        Task updatedTask = taskService.updateTask(id, task);
+
+        if (updatedTask == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Error: Task with ID " + id + " does not exist !");
+        }
+        return ResponseEntity.ok(updatedTask);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteTask(@PathVariable int id) {
+        Task deletedTask = taskService.deleteTask(id);
+
+        if (deletedTask == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Error: Task with ID " + id + " does not exist!");
+        }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
